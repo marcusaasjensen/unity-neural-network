@@ -23,124 +23,135 @@ MonoBehaviour:
   neuralNetwork:
     <Layers>k__BackingField:
     - <Neurons>k__BackingField:
-      - <Weights>k__BackingField: []
+      - activationFunction: 0
+        <Weights>k__BackingField: []
         <Inputs>k__BackingField:
-        - 1
         - 0
-        <Output>k__BackingField: 1
+        - 1
+        <Output>k__BackingField: 0
         <Bias>k__BackingField: 0
         <IsInputNeuron>k__BackingField: 1
         <InputIndex>k__BackingField: 0
-      - <Weights>k__BackingField: []
+      - activationFunction: 0
+        <Weights>k__BackingField: []
         <Inputs>k__BackingField:
-        - 1
         - 0
-        <Output>k__BackingField: 0
+        - 1
+        <Output>k__BackingField: 1
         <Bias>k__BackingField: 0
         <IsInputNeuron>k__BackingField: 1
         <InputIndex>k__BackingField: 1
     - <Neurons>k__BackingField:
-      - <Weights>k__BackingField:
-        - -10.07169604166473
-        - 9.724463596660806
+      - activationFunction: 0
+        <Weights>k__BackingField:
+        - -9.24951888852967
+        - 8.862128340254076
         <Inputs>k__BackingField:
-        - 1
         - 0
-        <Output>k__BackingField: 0.00000026890263760806946
-        <Bias>k__BackingField: -5.057220154271412
+        - 1
+        <Output>k__BackingField: 0.9858747165313745
+        <Bias>k__BackingField: -4.616565401472335
         <IsInputNeuron>k__BackingField: 0
         <InputIndex>k__BackingField: 0
-      - <Weights>k__BackingField:
-        - 9.70192221965015
-        - -10.108738433003602
+      - activationFunction: 0
+        <Weights>k__BackingField:
+        - 9.19125631310714
+        - -9.57975933626291
         <Inputs>k__BackingField:
-        - 1
         - 0
-        <Output>k__BackingField: 0.9907472922933122
-        <Bias>k__BackingField: -5.028378954306214
+        - 1
+        <Output>k__BackingField: 0.0000005806272194982452
+        <Bias>k__BackingField: -4.779396987893387
         <IsInputNeuron>k__BackingField: 0
         <InputIndex>k__BackingField: 0
-      - <Weights>k__BackingField:
-        - 8.156285664463933
-        - 8.206355001352218
+      - activationFunction: 0
+        <Weights>k__BackingField:
+        - 9.124937437088462
+        - -9.517542445047084
         <Inputs>k__BackingField:
-        - 1
         - 0
-        <Output>k__BackingField: 0.9999998677972751
-        <Bias>k__BackingField: 7.682643501546805
+        - 1
+        <Output>k__BackingField: 0.0000006393856826504139
+        <Bias>k__BackingField: -4.745214907989489
         <IsInputNeuron>k__BackingField: 0
         <InputIndex>k__BackingField: 0
-      - <Weights>k__BackingField:
-        - 8.917930193453453
-        - 8.941952708646575
+      - activationFunction: 0
+        <Weights>k__BackingField:
+        - 2.6154299232485276
+        - 2.4992535361194532
         <Inputs>k__BackingField:
-        - 1
         - 0
-        <Output>k__BackingField: 0.9926329996898781
-        <Bias>k__BackingField: -4.01457979494141
+        - 1
+        <Output>k__BackingField: 0.9999615356920132
+        <Bias>k__BackingField: 7.66648781077087
         <IsInputNeuron>k__BackingField: 0
         <InputIndex>k__BackingField: 0
     - <Neurons>k__BackingField:
-      - <Weights>k__BackingField:
-        - 1.5456824652825982
-        - 1.1923310948362746
+      - activationFunction: 0
+        <Weights>k__BackingField:
+        - 0.8995522603170798
+        - 1.2567290324736113
         <Inputs>k__BackingField:
-        - 0.00000026890263760806946
-        - 0.9907472922933122
-        - 0.9999998677972751
-        - 0.9926329996898781
-        <Output>k__BackingField: 0.9998871831925692
-        <Bias>k__BackingField: 7.908333185417519
+        - 0.9858747165313745
+        - 0.0000005806272194982452
+        - 0.0000006393856826504139
+        - 0.9999615356920132
+        <Output>k__BackingField: 0.9996364938753258
+        <Bias>k__BackingField: 7.032504280414739
         <IsInputNeuron>k__BackingField: 0
         <InputIndex>k__BackingField: 0
-      - <Weights>k__BackingField:
-        - 1.8432400437923624
-        - 1.7421312918733753
+      - activationFunction: 0
+        <Weights>k__BackingField:
+        - 1.2891930315720057
+        - 1.4163229503652077
         <Inputs>k__BackingField:
-        - 0.00000026890263760806946
-        - 0.9907472922933122
-        - 0.9999998677972751
-        - 0.9926329996898781
-        <Output>k__BackingField: 0.9998863941834033
-        <Bias>k__BackingField: 7.356649882386846
+        - 0.9858747165313745
+        - 0.0000005806272194982452
+        - 0.0000006393856826504139
+        - 0.9999615356920132
+        <Output>k__BackingField: 0.9997333175604325
+        <Bias>k__BackingField: 6.958201617418958
         <IsInputNeuron>k__BackingField: 0
         <InputIndex>k__BackingField: 0
-      - <Weights>k__BackingField:
-        - 13.599664058655698
-        - 13.58866470026109
+      - activationFunction: 0
+        <Weights>k__BackingField:
+        - 1.6509200287980017
+        - 1.22751516832342
         <Inputs>k__BackingField:
-        - 0.00000026890263760806946
-        - 0.9907472922933122
-        - 0.9999998677972751
-        - 0.9926329996898781
-        <Output>k__BackingField: 0.9988124984312047
-        <Bias>k__BackingField: -6.728220920892809
+        - 0.9858747165313745
+        - 0.0000005806272194982452
+        - 0.0000006393856826504139
+        - 0.9999615356920132
+        <Output>k__BackingField: 0.9998077533806617
+        <Bias>k__BackingField: 6.928938241212391
         <IsInputNeuron>k__BackingField: 0
         <InputIndex>k__BackingField: 0
-      - <Weights>k__BackingField:
-        - 1.4544996824827765
-        - 1.5789820191570174
+      - activationFunction: 0
+        <Weights>k__BackingField:
+        - 14.41487562221244
+        - 14.315262602491448
         <Inputs>k__BackingField:
-        - 0.00000026890263760806946
-        - 0.9907472922933122
-        - 0.9999998677972751
-        - 0.9926329996898781
-        <Output>k__BackingField: 0.9997335486230235
-        <Bias>k__BackingField: 6.6656797433140405
+        - 0.9858747165313745
+        - 0.0000005806272194982452
+        - 0.0000006393856826504139
+        - 0.9999615356920132
+        <Output>k__BackingField: 0.9991674061878925
+        <Bias>k__BackingField: -7.121138015083386
         <IsInputNeuron>k__BackingField: 0
         <InputIndex>k__BackingField: 0
     - <Neurons>k__BackingField:
-      - <Weights>k__BackingField:
-        - -1.3566610389815565
-        - -1.0282981568187146
-        - 10.53177029252198
-        - -0.7314728978547874
+      - activationFunction: 0
+        <Weights>k__BackingField:
+        - -1.296946606143505
+        - -1.2133521519599453
+        - -1.1864505703342227
+        - 10.829320857182248
         <Inputs>k__BackingField:
-        - 0.9998871831925692
-        - 0.9998863941834033
-        - 0.9988124984312047
-        - 0.9997335486230235
-        <Output>k__BackingField: 0.9949395570118035
-        <Bias>k__BackingField: -2.122068519852327
+        - 0.9996364938753258
+        - 0.9997333175604325
+        - 0.9998077533806617
+        - 0.9991674061878925
+        <Output>k__BackingField: 0.9956507681027348
+        <Bias>k__BackingField: -1.6911809145723984
         <IsInputNeuron>k__BackingField: 0
         <InputIndex>k__BackingField: 0

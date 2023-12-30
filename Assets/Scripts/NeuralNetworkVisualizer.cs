@@ -19,34 +19,62 @@ public class NeuralNetworkProperties
         defaultActivationFunction = neuralNetworkProperties.defaultActivationFunction;
     }
     
-    public int numInputs = 2;
-    public int numHiddenLayers = 2;
-    public int numNeuronsPerHiddenLayer = 2;
-    public int numOutputs = 1;
-    public int numTrainingEpochs = 10000;
-    public float learningRate = .1f;
-    public ActivationFunctionLibrary.ActivationFunctionName defaultActivationFunction;
+    [SerializeField] private int numInputs = 2;
+    [SerializeField] private int numHiddenLayers = 2;
+    [SerializeField] private int numNeuronsPerHiddenLayer = 2;
+    [SerializeField] private int numOutputs = 1;
+    [SerializeField] private int numTrainingEpochs = 10000;
+    [SerializeField] private float learningRate = .1f;
+    [SerializeField] private ActivationFunctionLibrary.ActivationFunctionName defaultActivationFunction;
+    
+    public int NumInputs => numInputs;
+    public int NumHiddenLayers => numHiddenLayers;
+    public int NumNeuronsPerHiddenLayer => numNeuronsPerHiddenLayer;
+    public int NumOutputs => numOutputs;
+    public int NumTrainingEpochs => numTrainingEpochs;
+    public float LearningRate => learningRate;
+    public ActivationFunctionLibrary.ActivationFunctionName DefaultActivationFunction => defaultActivationFunction;
 }
 
 [CreateAssetMenu(menuName = "Neural Network/Neural Network Scriptable Object")]
 public class NeuralNetworkScriptableObject : ScriptableObject
 {
-    public NeuralNetworkProperties neuralNetworkProperties;
-    public NeuralNetwork neuralNetwork;
+    [SerializeField] private NeuralNetworkProperties neuralNetworkProperties;
+    [SerializeField] private NeuralNetwork neuralNetwork;
+    
+    public NeuralNetworkProperties NeuralNetworkProperties
+    {
+        get => neuralNetworkProperties;
+        set => neuralNetworkProperties = value;
+    }
+
+    public NeuralNetwork NeuralNetwork
+    {
+        get => neuralNetwork;
+        set => neuralNetwork = value;
+    }
 }
 
 [Serializable]
 internal class VisualizeProperties
 {
     [Header("Dimensions")]
-    public float neuronSphereRadius = .05f;
-    public float layerSpacing = 1f;
-    public float neuronSpacing = 1f;
+    [SerializeField] private float neuronSphereRadius = .05f;
+    [SerializeField] private float layerSpacing = 1f;
+    [SerializeField] private float neuronSpacing = 1f;
     [Header("Colors")]
-    public Color hiddenNeuronColor = Color.white;
-    public Color connectionColor = Color.white;
-    public Color inputNeuronColor = Color.blue;
-    public Color outputNeuronColor = Color.green;
+    [SerializeField] private Color hiddenNeuronColor = Color.white;
+    [SerializeField] private Color connectionColor = Color.white;
+    [SerializeField] private Color inputNeuronColor = Color.blue;
+    [SerializeField] private Color outputNeuronColor = Color.green;
+    
+    public float NeuronSphereRadius => neuronSphereRadius;
+    public float LayerSpacing => layerSpacing;
+    public float NeuronSpacing => neuronSpacing;
+    public Color HiddenNeuronColor => hiddenNeuronColor;
+    public Color ConnectionColor => connectionColor;
+    public Color InputNeuronColor => inputNeuronColor;
+    public Color OutputNeuronColor => outputNeuronColor;
 }
 
 public class NeuralNetworkVisualizer : MonoBehaviour
@@ -77,10 +105,13 @@ public class NeuralNetworkVisualizer : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (_neuralNetwork?.Layers == null || _neuralNetwork.Layers.Length == 0) return;
+        if (_neuralNetwork?.Layers == null || _neuralNetwork.Layers.Length == 0)
+        {
+            return;
+        }
 
         var numLayers = _neuralNetwork.Layers.Length;
-        var layerWidth = visualizerProperties.layerSpacing / numLayers;
+        var layerWidth = visualizerProperties.LayerSpacing / numLayers;
 
         for (var i = 0; i < numLayers; i++)
         {
@@ -93,29 +124,32 @@ public class NeuralNetworkVisualizer : MonoBehaviour
 
             for (var j = 0; j < numNeurons; j++)
             {
-                var neuronWidth = visualizerProperties.neuronSpacing / numNeurons;
+                var neuronWidth = visualizerProperties.NeuronSpacing / numNeurons;
                 var neuronY = j * neuronWidth + neuronWidth / 2;
                 
                 var neuronColor = isInputLayer ? 
-                    visualizerProperties.inputNeuronColor 
+                    visualizerProperties.InputNeuronColor 
                     : (isOutputLayer ? 
-                        visualizerProperties.outputNeuronColor 
-                        : visualizerProperties.hiddenNeuronColor);
+                        visualizerProperties.OutputNeuronColor 
+                        : visualizerProperties.HiddenNeuronColor);
                 
                 Gizmos.color = neuronColor;
-                Gizmos.DrawSphere(new Vector3(layerX, neuronY), visualizerProperties.neuronSphereRadius);
-                
-                if (i >= numLayers - 1) continue;
+                Gizmos.DrawSphere(new Vector3(layerX, neuronY), visualizerProperties.NeuronSphereRadius);
+
+                if (i >= numLayers - 1)
+                {
+                    continue;
+                }
                 
                 var nextLayer = _neuralNetwork.Layers[i + 1];
                 var nextLayerX = (i + 1) * layerWidth + layerWidth / 2;
-                var nextNeuronWidth = visualizerProperties.neuronSpacing / nextLayer.Neurons.Length;
+                var nextNeuronWidth = visualizerProperties.NeuronSpacing / nextLayer.Neurons.Length;
 
                 for (var k = 0; k < nextLayer.Neurons?.Length; k++)
                 {
                     var nextNeuronY = k * nextNeuronWidth + nextNeuronWidth / 2;
 
-                    Gizmos.color = visualizerProperties.connectionColor;
+                    Gizmos.color = visualizerProperties.ConnectionColor;
                     Gizmos.DrawLine(new Vector3(layerX, neuronY), new Vector3(nextLayerX, nextNeuronY));
                 }
             }
@@ -130,7 +164,7 @@ public class NeuralNetworkVisualizer : MonoBehaviour
     public void CreateNeuralNetwork()
     {
         ClearNeuralNetwork();
-        _neuralNetwork = new NeuralNetwork(neuralNetworkProperties.numInputs, neuralNetworkProperties.numHiddenLayers, neuralNetworkProperties.numNeuronsPerHiddenLayer, neuralNetworkProperties.numOutputs, neuralNetworkProperties.defaultActivationFunction);
+        _neuralNetwork = new NeuralNetwork(neuralNetworkProperties.NumInputs, neuralNetworkProperties.NumHiddenLayers, neuralNetworkProperties.NumNeuronsPerHiddenLayer, neuralNetworkProperties.NumOutputs, neuralNetworkProperties.DefaultActivationFunction);
     }
     
     [ContextMenu("Train Neural Network")]
@@ -141,7 +175,7 @@ public class NeuralNetworkVisualizer : MonoBehaviour
             throw new Exception("Neural Network is null. Create a neural network first.");
         }
         
-        _neuralNetwork.Train(_trainingData, _targetData, neuralNetworkProperties.numTrainingEpochs, neuralNetworkProperties.learningRate);
+        _neuralNetwork.Train(_trainingData, _targetData, neuralNetworkProperties.NumTrainingEpochs, neuralNetworkProperties.LearningRate);
     }
     
     [ContextMenu("Test Neural Network")]
@@ -183,8 +217,8 @@ public class NeuralNetworkVisualizer : MonoBehaviour
         
         var filePath = Path.Combine(folderPath, neuralNetworkName + ".asset");
         var scriptableObject = ScriptableObject.CreateInstance<NeuralNetworkScriptableObject>();
-        scriptableObject.neuralNetworkProperties = neuralNetworkProperties;
-        scriptableObject.neuralNetwork = _neuralNetwork;
+        scriptableObject.NeuralNetworkProperties = neuralNetworkProperties;
+        scriptableObject.NeuralNetwork = _neuralNetwork;
         
         AssetDatabase.CreateAsset(scriptableObject, filePath);
         AssetDatabase.SaveAssets();
@@ -202,8 +236,8 @@ public class NeuralNetworkVisualizer : MonoBehaviour
         if (File.Exists(filePath))
         {
             var scriptableObject = AssetDatabase.LoadAssetAtPath<NeuralNetworkScriptableObject>(filePath);
-            neuralNetworkProperties = new NeuralNetworkProperties(scriptableObject.neuralNetworkProperties);
-            _neuralNetwork = scriptableObject.neuralNetwork;
+            neuralNetworkProperties = new NeuralNetworkProperties(scriptableObject.NeuralNetworkProperties);
+            _neuralNetwork = scriptableObject.NeuralNetwork;
             Debug.Log("Neural Network Properties loaded from: " + filePath);
         }
         else

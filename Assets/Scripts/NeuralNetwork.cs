@@ -74,8 +74,15 @@ public class NeuralNetwork
 
     private void BackPropagate([NotNull] double[] targets, [NotNull] double[] predictions, double learningRate)
     {
-        if (targets == null) throw new ArgumentNullException(nameof(targets));
-        if (predictions == null) throw new ArgumentNullException(nameof(predictions));
+        if (targets == null)
+        {
+            throw new ArgumentNullException(nameof(targets));
+        }
+
+        if (predictions == null)
+        {
+            throw new ArgumentNullException(nameof(predictions));
+        }
 
         var outputLayer = OutputLayer;
         var outputErrors = new double[outputLayer.Neurons.Length];
