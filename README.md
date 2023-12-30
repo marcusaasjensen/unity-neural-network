@@ -1,6 +1,7 @@
-# Unity Neural Network 
+# Unity Neural Network 🧠
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6c5ca96a82bc4b18999316bfab824029)](https://app.codacy.com?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
-
+[![Made with Unity](https://img.shields.io/badge/Made%20with-Unity-57b9d3.svg?style=flat&logo=unity)](https://unity3d.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Unity based neural network.
 
@@ -8,11 +9,13 @@ The neural networks can be trained and tested on the XOR Gate dataset.
 
 <img width="271" alt="neural_network_cover" src="https://github.com/marcusaasjensen/unity-neural-network/assets/88457743/19395e68-7a58-4503-81a5-793cbe7375e3">
 
-# Instructions
+# Instructions 📝
 
 Assuming you have Git installed, clone the project with the following command:
 
-```git clone https://github.com/marcusaasjensen/unity-neural-network.git```
+```bash
+git clone https://github.com/marcusaasjensen/unity-neural-network.git
+```
 
 Open the project in Unity.
 >[!IMPORTANT]
@@ -33,7 +36,6 @@ Right click on the inspector and choose "Load Neural Network from Scriptable Obj
 Focus on the neural network Gameobject in the scene to visualize the Gizmos. You can modify the Gizmos visuals according to your preferences with the Visualizer Properties in the inspector.
 
 <img width="323" alt="neural_network" src="https://github.com/marcusaasjensen/unity-neural-network/assets/88457743/1f8dfe8a-72b6-4901-a738-981f74ad209f">
-
 
 This neural network has already been trained. Right click on the inspector and choose "Test Neural Network".
 
