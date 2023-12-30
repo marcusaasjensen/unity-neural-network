@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -34,23 +35,18 @@ public class NeuralNetwork
         }
         return outputs;
     }
-
-    public void Train(double[][] trainingData, double[][] targetData, int epochs, float learningRate)
+    
+    public void Train(List<Data> trainingData, int epochs, float learningRate)
     {
         var epoch = 0;
         for (; epoch < epochs; epoch++)
         {
-            var shuffledData = trainingData.Zip(targetData, (data, target) => new { Data = data, Target = target })
-                .OrderBy(x => Guid.NewGuid())
-                .ToList();
+            var shuffledData = trainingData.OrderBy(x => Guid.NewGuid()).ToList();
 
-            trainingData = shuffledData.Select(x => x.Data).ToArray();
-            targetData = shuffledData.Select(x => x.Target).ToArray();
-            
-            for (var i = 0; i < trainingData.Length; i++)
+            foreach (var example in shuffledData)
             {
-                var inputs = trainingData[i];
-                var targets = targetData[i];
+                var inputs = example.Input;
+                var targets = example.Target;
 
                 var predictions = Predict(inputs);
 
@@ -58,13 +54,13 @@ public class NeuralNetwork
             }
         }
     }
-
-    public void Test(double[][] trainingData, double[][] targetData)
+    
+    public void Test(List<Data> testData)
     {
-        for (var i = 0; i < trainingData.Length; i++)
+        foreach (var example in testData)
         {
-            var inputs = trainingData[i];
-            var targets = targetData[i];
+            var inputs = example.Input;
+            var targets = example.Target;
 
             var predictions = Predict(inputs);
 

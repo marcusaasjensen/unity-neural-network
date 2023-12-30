@@ -1,81 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
-
-[Serializable]
-public class NeuralNetworkProperties
-{
-    public NeuralNetworkProperties() { }
-    public NeuralNetworkProperties(NeuralNetworkProperties neuralNetworkProperties)
-    {
-        numInputs = neuralNetworkProperties.numInputs;
-        numHiddenLayers = neuralNetworkProperties.numHiddenLayers;
-        numNeuronsPerHiddenLayer = neuralNetworkProperties.numNeuronsPerHiddenLayer;
-        numOutputs = neuralNetworkProperties.numOutputs;
-        numTrainingEpochs = neuralNetworkProperties.numTrainingEpochs;
-        learningRate = neuralNetworkProperties.learningRate;
-        defaultActivationFunction = neuralNetworkProperties.defaultActivationFunction;
-    }
-    
-    [SerializeField] private int numInputs = 2;
-    [SerializeField] private int numHiddenLayers = 2;
-    [SerializeField] private int numNeuronsPerHiddenLayer = 2;
-    [SerializeField] private int numOutputs = 1;
-    [SerializeField] private int numTrainingEpochs = 10000;
-    [SerializeField] private float learningRate = .1f;
-    [SerializeField] private ActivationFunctionLibrary.ActivationFunctionName defaultActivationFunction;
-    
-    public int NumInputs => numInputs;
-    public int NumHiddenLayers => numHiddenLayers;
-    public int NumNeuronsPerHiddenLayer => numNeuronsPerHiddenLayer;
-    public int NumOutputs => numOutputs;
-    public int NumTrainingEpochs => numTrainingEpochs;
-    public float LearningRate => learningRate;
-    public ActivationFunctionLibrary.ActivationFunctionName DefaultActivationFunction => defaultActivationFunction;
-}
-
-[CreateAssetMenu(menuName = "Neural Network/Neural Network Scriptable Object")]
-public class NeuralNetworkScriptableObject : ScriptableObject
-{
-    [SerializeField] private NeuralNetworkProperties neuralNetworkProperties;
-    [SerializeField] private NeuralNetwork neuralNetwork;
-    
-    public NeuralNetworkProperties NeuralNetworkProperties
-    {
-        get => neuralNetworkProperties;
-        set => neuralNetworkProperties = value;
-    }
-
-    public NeuralNetwork NeuralNetwork
-    {
-        get => neuralNetwork;
-        set => neuralNetwork = value;
-    }
-}
-
-[Serializable]
-internal class VisualizeProperties
-{
-    [Header("Dimensions")]
-    [SerializeField] private float neuronSphereRadius = .05f;
-    [SerializeField] private float layerSpacing = 1f;
-    [SerializeField] private float neuronSpacing = 1f;
-    [Header("Colors")]
-    [SerializeField] private Color hiddenNeuronColor = Color.white;
-    [SerializeField] private Color connectionColor = Color.white;
-    [SerializeField] private Color inputNeuronColor = Color.blue;
-    [SerializeField] private Color outputNeuronColor = Color.green;
-    
-    public float NeuronSphereRadius => neuronSphereRadius;
-    public float LayerSpacing => layerSpacing;
-    public float NeuronSpacing => neuronSpacing;
-    public Color HiddenNeuronColor => hiddenNeuronColor;
-    public Color ConnectionColor => connectionColor;
-    public Color InputNeuronColor => inputNeuronColor;
-    public Color OutputNeuronColor => outputNeuronColor;
-}
 
 public class NeuralNetworkVisualizer : MonoBehaviour
 {
@@ -83,24 +11,16 @@ public class NeuralNetworkVisualizer : MonoBehaviour
     [SerializeField] private string neuralNetworkName = "NeuralNetworkScriptableObject";
     [SerializeField] private NeuralNetworkProperties neuralNetworkProperties;
     [Header("Gizmos")]
-    [SerializeField] private VisualizeProperties visualizerProperties;
+    [SerializeField] private VisualizerProperties visualizerProperties;
     
     private NeuralNetwork _neuralNetwork;
     
-    private double[][] _trainingData =
+    private readonly List<Data> _trainingData = new()
     {
-        new[] {0d, 1d},
-        new[] {0d, 0d},
-        new[] {1d, 0d},
-        new[] {1d, 1d}
-    };
-        
-    private double[][] _targetData =
-    {
-        new[] {1d},
-        new[] {0d},
-        new[] {1d},
-        new[] {0d}
+        new Data { Input = new[] {0d, 1d}, Target = new[] {1d} },
+        new Data { Input = new[] {0d, 0d}, Target = new[] {0d} },
+        new Data { Input = new[] {1d, 0d}, Target = new[] {1d} },
+        new Data { Input = new[] {1d, 1d}, Target = new[] {0d} }
     };
 
     private void OnDrawGizmos()
@@ -172,10 +92,11 @@ public class NeuralNetworkVisualizer : MonoBehaviour
     {
         if (_neuralNetwork == null)
         {
-            throw new Exception("Neural Network is null. Create a neural network first.");
+            Debug.LogError("Neural Network is null. Create a neural network first.");
+            return;
         }
         
-        _neuralNetwork.Train(_trainingData, _targetData, neuralNetworkProperties.NumTrainingEpochs, neuralNetworkProperties.LearningRate);
+        _neuralNetwork.Train(_trainingData, neuralNetworkProperties.NumTrainingEpochs, neuralNetworkProperties.LearningRate);
     }
     
     [ContextMenu("Test Neural Network")]
@@ -183,18 +104,13 @@ public class NeuralNetworkVisualizer : MonoBehaviour
     {
         if (_neuralNetwork == null)
         {
-            throw new Exception("Neural Network is null. Create a neural network first.");
+            Debug.LogError("Neural Network is null. Create a neural network first.");
+            return;
         }
         
-        //shuffle data
-        var shuffledData = _trainingData.Zip(_targetData, (data, target) => new { Data = data, Target = target })
-            .OrderBy(x => Guid.NewGuid())
-            .ToList();
-
-        _trainingData = shuffledData.Select(x => x.Data).ToArray();
-        _targetData = shuffledData.Select(x => x.Target).ToArray();
-
-        _neuralNetwork.Test(_trainingData, _targetData);
+        var shuffledData = _trainingData.OrderBy(x => Guid.NewGuid()).ToList();
+        
+        _neuralNetwork.Test(shuffledData);
     }
     
     [ContextMenu("Generate Neural Network (Create, Train, Test)")]
