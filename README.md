@@ -1,9 +1,12 @@
-# unity-neural-network
+# Unity Neural Network 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6c5ca96a82bc4b18999316bfab824029)](https://app.codacy.com?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+
 
 Unity based neural network.
 
 The neural networks can be trained and tested on the XOR Gate dataset.
+
+<img width="271" alt="neural_network_cover" src="https://github.com/marcusaasjensen/unity-neural-network/assets/88457743/19395e68-7a58-4503-81a5-793cbe7375e3">
 
 # Instructions
 
