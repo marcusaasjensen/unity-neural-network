@@ -1,5 +1,9 @@
-﻿public class Data
+﻿using System;
+using UnityEngine;
+
+[Serializable]
+public class Data
 {
-    public double[] Input { get; set; }
-    public double[] Target { get; set; }
+    [field: SerializeField] public double[] Input { get; set; }
+    [field: SerializeField] public double[] Target { get; set; }
 }

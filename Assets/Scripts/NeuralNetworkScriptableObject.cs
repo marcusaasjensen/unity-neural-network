@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Neural Network/Neural Network Scriptable Object")]
+[CreateAssetMenu(menuName = "Scriptable Object/Neural Network")]
 public class NeuralNetworkScriptableObject : ScriptableObject
 {
     [SerializeField] private NeuralNetworkProperties neuralNetworkProperties;

@@ -7,21 +7,26 @@ using UnityEngine;
 
 public class NeuralNetworkVisualizer : MonoBehaviour
 {
+    [Header("Dataset"), SerializeField]
+    private string datasetName = "DatasetScriptableObject";
+    
     [Header("Neural Network")]
     [SerializeField] private string neuralNetworkName = "NeuralNetworkScriptableObject";
     [SerializeField] private NeuralNetworkProperties neuralNetworkProperties;
+    
     [Header("Gizmos")]
     [SerializeField] private VisualizerProperties visualizerProperties;
     
-    private NeuralNetwork _neuralNetwork;
     
-    private readonly List<Data> _trainingData = new()
+    private List<Data> _trainingData = new()
     {
         new Data { Input = new[] {0d, 1d}, Target = new[] {1d} },
         new Data { Input = new[] {0d, 0d}, Target = new[] {0d} },
         new Data { Input = new[] {1d, 0d}, Target = new[] {1d} },
         new Data { Input = new[] {1d, 1d}, Target = new[] {0d} }
     };
+    private NeuralNetwork _neuralNetwork;
+    
 
     private void OnDrawGizmos()
     {
@@ -77,17 +82,17 @@ public class NeuralNetworkVisualizer : MonoBehaviour
     }
 
     
-    [ContextMenu("Clear Neural Network")]
+    [ContextMenu("Neural Network/Clear Neural Network")]
     public void ClearNeuralNetwork() => _neuralNetwork = null;
     
-    [ContextMenu("Create Neural Network")]
+    [ContextMenu("Neural Network/Create Neural Network")]
     public void CreateNeuralNetwork()
     {
         ClearNeuralNetwork();
         _neuralNetwork = new NeuralNetwork(neuralNetworkProperties.NumInputs, neuralNetworkProperties.NumHiddenLayers, neuralNetworkProperties.NumNeuronsPerHiddenLayer, neuralNetworkProperties.NumOutputs, neuralNetworkProperties.DefaultActivationFunction);
     }
     
-    [ContextMenu("Train Neural Network")]
+    [ContextMenu("Neural Network/Train Neural Network")]
     public void TrainNeuralNetwork()
     {
         if (_neuralNetwork == null)
@@ -99,7 +104,7 @@ public class NeuralNetworkVisualizer : MonoBehaviour
         _neuralNetwork.Train(_trainingData, neuralNetworkProperties.NumTrainingEpochs, neuralNetworkProperties.LearningRate);
     }
     
-    [ContextMenu("Test Neural Network")]
+    [ContextMenu("Neural Network/Test Neural Network")]
     public void TestNeuralNetwork()
     {
         if (_neuralNetwork == null)
@@ -113,7 +118,7 @@ public class NeuralNetworkVisualizer : MonoBehaviour
         _neuralNetwork.Test(shuffledData);
     }
     
-    [ContextMenu("Generate Neural Network (Create, Train, Test)")]
+    [ContextMenu("Neural Network/Generate Neural Network (Create, Train, Test)")]
     public void CreateTrainTestNeuralNetwork()
     {
         CreateNeuralNetwork();
@@ -121,10 +126,10 @@ public class NeuralNetworkVisualizer : MonoBehaviour
         TestNeuralNetwork();
     }
     
-    [ContextMenu("Save Neural Network to Scriptable Object")]
+    [ContextMenu("Neural Network/Save Neural Network to Scriptable Object")]
     public void SaveNeuralNetworkPropertiesToScriptableObject()
     {
-        const string folderPath = "Assets/Resources/";
+        const string folderPath = "Assets/Resources/NeuralNetworks/";
         
         if (!Directory.Exists(folderPath))
         {
@@ -143,10 +148,10 @@ public class NeuralNetworkVisualizer : MonoBehaviour
         Debug.Log("Neural Network saved to: " + filePath);
     }
     
-    [ContextMenu("Load Neural Network from Scriptable Object")]
+    [ContextMenu("Neural Network/Load Neural Network from Scriptable Object")]
     public void LoadNeuralNetworkPropertiesFromScriptableObject()
     {
-        const string folderPath = "Assets/Resources/";
+        const string folderPath = "Assets/Resources/NeuralNetworks/";
         var filePath = Path.Combine(folderPath, neuralNetworkName + ".asset");
         
         if (File.Exists(filePath))
@@ -159,6 +164,45 @@ public class NeuralNetworkVisualizer : MonoBehaviour
         else
         {
             Debug.LogError("Neural Network Properties file not found: " + filePath);
+        }
+    }
+    
+    [ContextMenu("Dataset/Save Dataset to Scriptable Object")]
+    public void SaveDatasetToScriptableObject()
+    {
+        const string folderPath = "Assets/Resources/Datasets/";
+        
+        if (!Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath);
+        }
+        
+        var filePath = Path.Combine(folderPath, datasetName + ".asset");
+        var scriptableObject = ScriptableObject.CreateInstance<Dataset>();
+        scriptableObject.TrainingData = _trainingData;
+        
+        AssetDatabase.CreateAsset(scriptableObject, filePath);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+        
+        Debug.Log("Dataset saved to: " + filePath);
+    }
+    
+    [ContextMenu("Dataset/Load Dataset from Scriptable Object")]
+    public void LoadDatasetFromScriptableObject()
+    {
+        const string folderPath = "Assets/Resources/Datasets/";
+        var filePath = Path.Combine(folderPath, datasetName + ".asset");
+        
+        if (File.Exists(filePath))
+        {
+            var scriptableObject = AssetDatabase.LoadAssetAtPath<Dataset>(filePath);
+            _trainingData = scriptableObject.TrainingData;
+            Debug.Log("Dataset loaded from: " + filePath);
+        }
+        else
+        {
+            Debug.LogError("Dataset file not found: " + filePath);
         }
     }
     
