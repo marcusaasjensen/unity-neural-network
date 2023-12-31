@@ -5,7 +5,7 @@
 
 Unity based neural network. The represented neural network is a binary classification neural network.
 
-The neural networks can be trained and tested on the XOR Gate dataset.
+The neural networks can be trained and tested on custom datasets. It works with gate datasets (AND, XOR and so on).
 
 <img width="271" alt="neural_network_cover" src="https://github.com/marcusaasjensen/unity-neural-network/assets/88457743/19395e68-7a58-4503-81a5-793cbe7375e3">
 
@@ -27,11 +27,13 @@ Open the "NeuralNetworkScene" scene.
 
 Go to the NeuralNetwork Gameobject's inspector.
 
-<img width="332" alt="inspector" src="https://github.com/marcusaasjensen/unity-neural-network/assets/88457743/b7c06cac-558a-4284-885a-e22d86575e49">
+<img width="324" alt="inspector" src="https://github.com/marcusaasjensen/unity-neural-network/assets/88457743/e1c2f3b3-0fc0-4669-b70f-d9aa621cd433">
 
-Write "NeuralNetworkScriptableObject" as the name of the neural network.
+Write "NeuralNetwork_XOR" as the name of the neural network.
 
-Right click on the inspector and choose "Load Neural Network from Scriptable Object".
+Right click on the inspector and choose "Neural Network/Load Neural Network from Scriptable Object".
+
+Do the same for the Dataset with the name "XOR" and load from "Dataset/Load Dataset from Scriptable Object".
 
 Focus on the neural network Gameobject in the scene to visualize the Gizmos. You can modify the Gizmos visuals according to your preferences with the Visualizer Properties in the inspector.
 
@@ -39,13 +41,19 @@ Focus on the neural network Gameobject in the scene to visualize the Gizmos. You
 
 This neural network has already been trained. Right click on the inspector and choose "Test Neural Network".
 
-The results will appear in the Unity's Console. These are the predictions for both inputs of a XOR Gate.
+The results will appear in the Unity's Console. These are the predictions for both inputs of the XOR Gate.
 
-<img width="193" alt="results" src="https://github.com/marcusaasjensen/unity-neural-network/assets/88457743/303b4d17-50b1-4e0d-8133-e15b92aaf8b2">
+<img width="200" alt="results" src="https://github.com/marcusaasjensen/unity-neural-network/assets/88457743/ef6e46b1-9d96-4a74-9997-a8fd684fc043">
 
 You can generate your own neural network by using the different functions implemented by right-clicking on the inspector.
 
-When you are satisfied with the results of your neural network, you can save it as a scriptable object: right click on the inspector and choose "Save Neural Network to Scriptable Object." The name of the asset will be the name of the neural network.
+When you are satisfied with the results of your neural network, you can save it as a scriptable object: right click on the inspector and choose "Neural Network/Save Neural Network to Scriptable Object." The name of the asset will be the name of the neural network.
+
+You can create your on dataset: right-click on the folder's hirarchy and choose "Create/Scriptable Object/Dataset".
+
+>[!WARNING]
+>Make sure to put all of your Datasets inside the folder "Assets/Resources/Datasets", as well for your neural networks inside "Assets/Resources/NeuralNetworks".
+>
 
 Enjoy.
 
