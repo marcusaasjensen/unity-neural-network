@@ -167,27 +167,6 @@ public class NeuralNetworkVisualizer : MonoBehaviour
         }
     }
     
-    [ContextMenu("Dataset/Save Dataset to Scriptable Object")]
-    public void SaveDatasetToScriptableObject()
-    {
-        const string folderPath = "Assets/Resources/Datasets/";
-        
-        if (!Directory.Exists(folderPath))
-        {
-            Directory.CreateDirectory(folderPath);
-        }
-        
-        var filePath = Path.Combine(folderPath, datasetName + ".asset");
-        var scriptableObject = ScriptableObject.CreateInstance<Dataset>();
-        scriptableObject.TrainingData = _trainingData;
-        
-        AssetDatabase.CreateAsset(scriptableObject, filePath);
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-        
-        Debug.Log("Dataset saved to: " + filePath);
-    }
-    
     [ContextMenu("Dataset/Load Dataset from Scriptable Object")]
     public void LoadDatasetFromScriptableObject()
     {
